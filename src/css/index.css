@@ -1,1 +1,88 @@
 @import url(base.css);
+
+.container {
+  width: 90%;
+  height: inherit;
+  margin: 0 auto;
+}
+
+.container h1 {
+  text-align: center;
+  margin: 20px 0 0 0;
+  padding: 20px 0;
+  color: var(--light);
+  background-color: var(--dark);
+  text-decoration: underline;
+}
+
+.search-filter form {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--dark);
+  margin-bottom: 20px;
+  padding: 10px 20px 20px 20px;
+  position: relative;
+}
+
+input {
+  padding: 7px 10px 7px 20px;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+  border: none;
+  color: var(--dark);
+  background-color: var(--light);
+}
+
+.search-filter form i {
+  position:absolute;
+  top: 18px;
+  left: 22px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th:first-child{
+  border-radius:10px 0 0 0px;
+}
+
+table th:last-child{
+  border-radius:0 10px 0px 0;
+}
+
+table td, table th {
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: var(--white);}
+table tr:nth-child(odd){background-color: var(--light) }
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--dark);
+  color: var(--white);
+}
+
+table tr i {
+  margin-left: 5px;
+  cursor: pointer;
+  color: var(--light);
+}
+
+select {
+  border-radius: 5px;
+  padding: 0 15px;
+  outline: none;
+  border: none;
+  background-color: var(--light);
+  font-size: 14px;
+}
+
+select option {
+  font-size: 16px;
+}

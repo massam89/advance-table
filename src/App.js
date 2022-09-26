@@ -1,7 +1,12 @@
+import Table from "./components/Table";
+import SearchAndFilter from './components/SearchAndFilter'
+
 function App() {
   return (
-    <div>
-      hello from  app
+    <div className="container">
+      <h1>Advance Table</h1>
+      <SearchAndFilter />
+      <Table />     
     </div>
   );
 }
