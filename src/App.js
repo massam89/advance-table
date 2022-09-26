@@ -1,10 +1,12 @@
 import Table from "./components/Table";
 import SearchAndFilter from './components/SearchAndFilter'
+import Header from "./components/Header";
 
 function App() {
+
   return (
     <div className="container">
-      <h1>Advance Table</h1>
+      <Header />
       <SearchAndFilter />
       <Table />     
     </div>

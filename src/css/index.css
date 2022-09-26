@@ -8,24 +8,25 @@
 
 .container h1 {
   text-align: center;
-  margin: 20px 0 0 0;
+  margin: 10px 0 0 0;
   padding: 20px 0;
   color: var(--light);
   background-color: var(--dark);
   text-decoration: underline;
+  border-radius: 10px 10px 0 0;
 }
 
 .search-filter form {
   display: flex;
   justify-content: space-between;
   background-color: var(--dark);
-  margin-bottom: 20px;
+  margin-bottom: 2px;
   padding: 10px 20px 20px 20px;
   position: relative;
 }
 
 input {
-  padding: 7px 10px 7px 20px;
+  padding: 7px 10px 7px 40px;
   border-radius: 5px;
   outline: none;
   font-size: 16px;
@@ -36,21 +37,14 @@ input {
 
 .search-filter form i {
   position:absolute;
-  top: 18px;
-  left: 22px;
+  top: 14px;
+  left: 27px;
+  font-size: 22px;
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
-}
-
-table th:first-child{
-  border-radius:10px 0 0 0px;
-}
-
-table th:last-child{
-  border-radius:0 10px 0px 0;
 }
 
 table td, table th {
@@ -72,6 +66,14 @@ table tr i {
   margin-left: 5px;
   cursor: pointer;
   color: var(--light);
+}
+
+table td i {
+  color: var(--dark);
+}
+
+table td img {
+  border-radius: 50%;
 }
 
 select {
