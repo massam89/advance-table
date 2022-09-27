@@ -4,9 +4,7 @@ import useSort from "../hooks/useSort";
 
 const Table = () => {
   const [disableArray, setDisableArray] = useState([])
-
-
-  const {state} = useContext(Context)
+  const {state, changeInputHandler} = useContext(Context)
 
   const {isUp:nameIsUp, upHandler: nameUpHandler, downHandler: nameDownHandler} = useSort()
   const {isUp:ageIsUp, upHandler: ageUpHandler, downHandler: ageDownHandler} = useSort()
@@ -26,6 +24,15 @@ const Table = () => {
    const test = [...disableArray]
    test[+e.target.id] = !test[+e.target.id]
    setDisableArray(test)
+  }
+
+  const inputChangeHandler = (e) => {
+    const value = e.target.value
+    const idAndColumn = e.target.id.split('-')
+    const id = +idAndColumn[0]
+    const column = idAndColumn[1]
+    
+    changeInputHandler({value, id, column})
   }
 
   return (
@@ -74,9 +81,9 @@ const Table = () => {
           {state.filteredUsers && state.filteredUsers.map((user, index) => 
             <tr key={index}>
               <td><input type='text' value={`${user.name.first} ${user.name.last}`} disabled /></td>
-              <td><input type='text' value={`${user.dob.age}`} disabled={disableArray[index]} /></td>
-              <td><input type='text' value={`${user.gender}`} disabled={disableArray[index]} /></td>
-              <td><input type='text' value={`${user.location.city}`} disabled={disableArray[index]} /></td>
+              <td><input id={`${index}-age`} type='text' onChange={inputChangeHandler} value={`${user.dob.age}`} disabled={disableArray[index]} /></td>
+              <td><input id={`${index}-gender`} type='text' onChange={inputChangeHandler} value={`${user.gender}`} disabled={disableArray[index]} /></td>
+              <td><input id={`${index}-city`} type='text' onChange={inputChangeHandler} value={`${user.location.city}`} disabled={disableArray[index]} /></td>
               <td><img src={user.picture.thumbnail} width='32' alt={`${user.name.first} ${user.name.last}`} /></td>
               <td><i id={index} onClick={editHandler} className="bi bi-pen-fill"></i></td>
             </tr>

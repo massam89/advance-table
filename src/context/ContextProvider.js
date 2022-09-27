@@ -27,6 +27,20 @@ const reducer = (state, action) => {
     sortUsers = sortArray(sortUsers, action.payload.column, action.payload.sort)
     return {...state, filteredUsers: sortUsers}
   }
+  if(action.type === 'CHANGE-VALUE'){
+    const {value, id, column} = action.payload
+    let array = [...state.users]
+    if(column === 'age'){
+      array[id].dob.age = value
+    }
+    if(column === 'gender'){
+      array[id].gender = value
+    }
+    if(column === 'city'){
+      array[id].location.city = value
+    }
+    return {...state, users: array}
+  }
   return initialState
 }
 
@@ -59,12 +73,17 @@ const ContextProvider = (props) => {
     dispatch({type: 'SORT', payload: data})
   }
 
+  const changeInputHandler = (data) => {
+    dispatch({type: 'CHANGE-VALUE', payload: data})
+  }
+
   const contextItem = {
     state,
     listLengthHandler,
     searchHandler,
     getData,
-    sortHandler
+    sortHandler,
+    changeInputHandler
   }
 
   return <Context.Provider value={contextItem}>{props.children}</Context.Provider>;
