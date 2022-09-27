@@ -43,3 +43,111 @@ const editDistance = (s1, s2) => {
   }
   return costs[s2.length];
 }
+
+export const sortArray = (array, type, sort) => {
+  let newArray;
+
+  if(type === 'name'){
+    if(sort === 'ASC'){
+      newArray = array.sort((a,b) => {
+        let fa = a.name.first.toLowerCase(),
+        fb = b.name.first.toLowerCase();
+
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+      })
+    }
+    if(sort === 'DESC'){
+      newArray = array.sort((a,b) => {
+        let fa = a.name.first.toLowerCase(),
+        fb = b.name.first.toLowerCase();
+
+        if (fa > fb) {
+            return -1;
+        }
+        if (fa < fb) {
+            return 1;
+        }
+        return 0;
+      })
+    }    
+  }
+
+  if(type === 'gender'){
+    if(sort === 'ASC'){
+      newArray = array.sort((a,b) => {
+        let fa = a.gender.toLowerCase(),
+        fb = b.gender.toLowerCase();
+
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+      })
+    }
+    if(sort === 'DESC'){
+      newArray = array.sort((a,b) => {
+        let fa = a.gender.toLowerCase(),
+        fb = b.gender.toLowerCase();
+
+        if (fa > fb) {
+            return -1;
+        }
+        if (fa < fb) {
+            return 1;
+        }
+        return 0;
+      })
+    }    
+  }
+  
+  if(type === 'city'){
+    if(sort === 'ASC'){
+      newArray = array.sort((a,b) => {
+        let fa = a.location.city.toLowerCase(),
+        fb = b.location.city.toLowerCase();
+
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+      })
+    }
+    if(sort === 'DESC'){
+      newArray = array.sort((a,b) => {
+        let fa = a.location.city.toLowerCase(),
+        fb = b.location.city.toLowerCase();
+
+        if (fa > fb) {
+            return -1;
+        }
+        if (fa < fb) {
+            return 1;
+        }
+        return 0;
+      })
+    }    
+  }
+
+  if(type === 'age'){
+    if(sort === 'ASC'){
+      newArray = array.sort((a,b) => a.dob.age - b.dob.age)
+    }
+    if(sort === 'DESC'){
+      newArray = array.sort((a,b) => b.dob.age - a.dob.age)
+    }    
+  }
+
+  return newArray
+}

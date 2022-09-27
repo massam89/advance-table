@@ -1,6 +1,8 @@
+import ReactDom from 'react-dom'
 import Table from "./components/Table";
 import SearchAndFilter from './components/SearchAndFilter'
 import Header from "./components/Header";
+import NewUsers from "./components/NewUsers";
 
 function App() {
 
@@ -8,7 +10,8 @@ function App() {
     <div className="container">
       <Header />
       <SearchAndFilter />
-      <Table />     
+      <Table />
+      {ReactDom.createPortal(<NewUsers />, document.getElementById('fixed-button'))}  
     </div>
   );
 }

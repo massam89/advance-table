@@ -11,7 +11,7 @@ const SearchAndFilter = () => {
   }
 
   const searchInputHandler = (e) => {
-    searchHandler(e.target.value)
+    searchHandler(e.target.value.trim())
   }
 
   return (

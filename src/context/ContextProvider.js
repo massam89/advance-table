@@ -1,5 +1,6 @@
-import React, {useEffect, useReducer} from "react";
+import React, {useEffect, useReducer, useCallback} from "react";
 import {similarity} from '../lib/helper.js'
+import {sortArray} from '../lib/helper.js'
 
 export const Context = React.createContext();
 
@@ -21,20 +22,26 @@ const reducer = (state, action) => {
     const searchUsers = userByFilter.filter(user => similarity(user.name.first.toLowerCase(),action.payload.toLowerCase()) > 0.5 || similarity(user.name.last.toLowerCase(),action.payload.toLowerCase()) > 0.5)
     return {...state, filteredUsers: searchUsers}
   }
+  if(action.type === 'SORT'){
+    let sortUsers = state.users.slice(0, state.rowNumber)
+    sortUsers = sortArray(sortUsers, action.payload.column, action.payload.sort)
+    return {...state, filteredUsers: sortUsers}
+  }
   return initialState
 }
 
 const ContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch('https://randomuser.me/api/?results=100')
-      const data = await response.json()
-      dispatch({type: 'ADD', payload: data.results})
-    }
-    getData()
+  const getData = useCallback(async () => {
+    const response = await fetch('https://randomuser.me/api/?results=100')
+    const data = await response.json()
+    dispatch({type: 'ADD', payload: data.results})
   }, [])
+
+  useEffect(() => {
+    getData()
+  }, [getData])
 
   const listLengthHandler = (number) => {
     dispatch({type: 'UPDATE-LENGTH', payload: number})
@@ -45,14 +52,19 @@ const ContextProvider = (props) => {
       dispatch({type: 'SEARCH', payload: input})
     } else {
       dispatch({type: 'UPDATE-LENGTH', payload: state.rowNumber})
-    }
-    
+    } 
+  }
+
+  const sortHandler = (data) => {
+    dispatch({type: 'SORT', payload: data})
   }
 
   const contextItem = {
     state,
     listLengthHandler,
-    searchHandler
+    searchHandler,
+    getData,
+    sortHandler
   }
 
   return <Context.Provider value={contextItem}>{props.children}</Context.Provider>;
