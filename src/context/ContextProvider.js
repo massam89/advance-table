@@ -1,10 +1,7 @@
 import React, {useEffect, useReducer} from "react";
 import {similarity} from '../lib/helper.js'
 
-export const Context = React.createContext({
-  users: [],
-  filteredUsers: [],
-});
+export const Context = React.createContext();
 
 const initialState = {
   users: [],
@@ -20,8 +17,8 @@ const reducer = (state, action) => {
     return {...state, filteredUsers: state.users.slice(0, action.payload), rowNumber: action.payload}
   }
   if(action.type === 'SEARCH'){
-
-   const searchUsers = state.users.filter(user => similarity(user.name.first.toLowerCase(),action.payload.toLowerCase()) > 0.5 || similarity(user.name.last.toLowerCase(),action.payload.toLowerCase()) > 0.5)
+    const userByFilter = state.users.slice(0, state.rowNumber);
+    const searchUsers = userByFilter.filter(user => similarity(user.name.first.toLowerCase(),action.payload.toLowerCase()) > 0.5 || similarity(user.name.last.toLowerCase(),action.payload.toLowerCase()) > 0.5)
     return {...state, filteredUsers: searchUsers}
   }
   return initialState
@@ -39,7 +36,7 @@ const ContextProvider = (props) => {
     getData()
   }, [])
 
-  const listLengthHadler = (number) => {
+  const listLengthHandler = (number) => {
     dispatch({type: 'UPDATE-LENGTH', payload: number})
   }
 
@@ -52,7 +49,13 @@ const ContextProvider = (props) => {
     
   }
 
-  return <Context.Provider value={{ state, listLengthHadler, searchHandler }}>{props.children}</Context.Provider>;
+  const contextItem = {
+    state,
+    listLengthHandler,
+    searchHandler
+  }
+
+  return <Context.Provider value={contextItem}>{props.children}</Context.Provider>;
 };
 
 export default ContextProvider;

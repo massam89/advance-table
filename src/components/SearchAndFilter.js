@@ -4,10 +4,10 @@ import { Context } from "../context/ContextProvider";
 const SearchAndFilter = () => {
 
   const selectInput = useRef()
-  const {listLengthHadler, searchHandler} = useContext(Context)
+  const {listLengthHandler, searchHandler} = useContext(Context)
 
   const selectChangeHandler = () => {
-    listLengthHadler(+selectInput.current.value)
+    listLengthHandler(+selectInput.current.value)
   }
 
   const searchInputHandler = (e) => {
@@ -26,6 +26,8 @@ const SearchAndFilter = () => {
             autoComplete="off"
             autoFocus
             onChange={searchInputHandler}
+            onBlur={searchInputHandler}
+            onFocus={searchInputHandler}
           />
         </div>
 
