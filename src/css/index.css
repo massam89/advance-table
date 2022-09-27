@@ -20,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   background-color: var(--dark);
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   padding: 10px 20px 20px 20px;
   position: relative;
 }
@@ -42,13 +42,19 @@ input {
   font-size: 22px;
 }
 
+.table-container {
+  overflow-x: auto;
+}
+
 table {
   border-collapse: collapse;
+  border-spacing: 0;
   width: 100%;
 }
 
 table td, table th {
   padding: 5px 10px;
+  text-align: left;
 }
 
 table tr:nth-child(even){background-color: var(--white);}
@@ -74,6 +80,16 @@ table td i {
 
 table td img {
   border-radius: 50%;
+}
+
+table td input {
+  width: auto;
+  background-color: rgb(228, 236, 228);
+  padding: 5px 10px;
+}
+
+table td input:disabled {
+  background-color: inherit
 }
 
 select {

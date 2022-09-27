@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../context/ContextProvider";
 import useSort from "../hooks/useSort";
 
 const Table = () => {
+  const [disableArray, setDisableArray] = useState([])
+
 
   const {state} = useContext(Context)
 
@@ -11,60 +13,77 @@ const Table = () => {
   const {isUp:genderIsUp, upHandler: genderUpHandler, downHandler: genderDownHandler} = useSort()
   const {isUp:cityIsUp, upHandler: cityUpHandler, downHandler: cityDownHandler} = useSort()
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th data-column="name">
-            Name
-            {nameIsUp ?
-            <i onClick={nameUpHandler} className="bi bi-caret-up-fill"></i>
-            :
-            <i onClick={nameDownHandler} className="bi bi-caret-down-fill"></i>
-            }           
-          </th>
-          <th data-column="age">
-            Age
-            {ageIsUp ?
-            <i onClick={ageUpHandler} className="bi bi-caret-up-fill"></i>
-            :
-            <i onClick={ageDownHandler} className="bi bi-caret-down-fill"></i>
-            }           
-          </th>
-          <th data-column="gender">
-            Gender
-            {genderIsUp ?
-            <i onClick={genderUpHandler} className="bi bi-caret-up-fill"></i>
-            :
-            <i onClick={genderDownHandler} className="bi bi-caret-down-fill"></i>
-            }           
-          </th>
-          <th data-column="city">
-            City
-            {cityIsUp ?
-            <i onClick={cityUpHandler} className="bi bi-caret-up-fill"></i>
-            :
-            <i onClick={cityDownHandler} className="bi bi-caret-down-fill"></i>
-            }           
-          </th>   
-          <th>Image</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+ useEffect(() => {
+  const length = state.filteredUsers.length
+  const test = []
+  for(let i=0; i < length ; i++){
+    test.push(true)
+  }
+  setDisableArray(test)
+ },[state.filteredUsers])
 
-      <tbody>
-        {state.filteredUsers && state.filteredUsers.map((user, index) => 
-          <tr key={index}>
-            <td>{user.name.first} {user.name.last}</td>
-            <td>{user.dob.age}</td>
-            <td>{user.gender}</td>
-            <td>{user.location.city}</td>
-            <td><img src={user.picture.thumbnail} width='32' alt={`${user.name.first} ${user.name.last}`} /></td>
-            <td><i className="bi bi-pen-fill"></i></td>
+  const editHandler = (e) => {
+   const test = [...disableArray]
+   test[+e.target.id] = !test[+e.target.id]
+   setDisableArray(test)
+  }
+
+  return (
+    <div className="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th data-column="name">
+              Name
+              {nameIsUp ?
+              <i onClick={nameUpHandler} className="bi bi-caret-up-fill"></i>
+              :
+              <i onClick={nameDownHandler} className="bi bi-caret-down-fill"></i>
+              }           
+            </th>
+            <th data-column="age">
+              Age
+              {ageIsUp ?
+              <i onClick={ageUpHandler} className="bi bi-caret-up-fill"></i>
+              :
+              <i onClick={ageDownHandler} className="bi bi-caret-down-fill"></i>
+              }           
+            </th>
+            <th data-column="gender">
+              Gender
+              {genderIsUp ?
+              <i onClick={genderUpHandler} className="bi bi-caret-up-fill"></i>
+              :
+              <i onClick={genderDownHandler} className="bi bi-caret-down-fill"></i>
+              }           
+            </th>
+            <th data-column="city">
+              City
+              {cityIsUp ?
+              <i onClick={cityUpHandler} className="bi bi-caret-up-fill"></i>
+              :
+              <i onClick={cityDownHandler} className="bi bi-caret-down-fill"></i>
+              }           
+            </th>   
+            <th>Image</th>
+            <th>Action</th>
           </tr>
-        )}       
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {state.filteredUsers && state.filteredUsers.map((user, index) => 
+            <tr key={index}>
+              <td><input type='text' value={`${user.name.first} ${user.name.last}`} disabled /></td>
+              <td><input type='text' value={`${user.dob.age}`} disabled={disableArray[index]} /></td>
+              <td><input type='text' value={`${user.gender}`} disabled={disableArray[index]} /></td>
+              <td><input type='text' value={`${user.location.city}`} disabled={disableArray[index]} /></td>
+              <td><img src={user.picture.thumbnail} width='32' alt={`${user.name.first} ${user.name.last}`} /></td>
+              <td><i id={index} onClick={editHandler} className="bi bi-pen-fill"></i></td>
+            </tr>
+          )}       
+        </tbody>
+      </table>
+    </div> 
   );
 };
 
