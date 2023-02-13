@@ -29,7 +29,7 @@ const reducer = (state, action) => {
   }
   if(action.type === 'CHANGE-VALUE'){
     const {value, id, column} = action.payload
-    let array = [...state.users]
+    let array = [...state.filteredUsers]
     if(column === 'age'){
       array[id].dob.age = value
     }
